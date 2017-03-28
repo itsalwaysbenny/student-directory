@@ -1,19 +1,22 @@
-# Print each student name on different line
+# Let's put all students into an array
+students = [
+    "Dr. Hannibal Lecter",
+    "Darth Vader",
+    "Nurse Ratched",
+    "Michael Corleone",
+    "Alex DeLarge",
+    "The Wicked Witch of the West",
+    "Terminator",
+    "Freddy Krueger",
+    "The Joker",
+    "Joffrey Baratheon",
+    "Norman Bates"
+    ]
+# Then print them
 puts "The students of Villains Academy"
 puts "-------------"
-puts "Dr. Hannibal Lecter"
-puts "Darth Vader"
-puts "Nurse Ratched"
-puts "Michael Corleone"
-puts "Alex DeLarge"
-puts "The Wicked Witch of the West"
-puts "Terminator"
-puts "Freddy Krueger"
-puts "The Joker"
-puts "Joffrey Baratheon"
-puts "Norman Bates"
-# print number of students on one line
-print "Overall we have "
-# use print instead of puts
-print 11
-print " great students"
+students.each do |student|
+    puts student
+end
+# finally, print the total
+print "Overall, we have #{students.count} great students"
