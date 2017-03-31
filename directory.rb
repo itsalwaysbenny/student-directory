@@ -5,8 +5,9 @@ def print_header
 end
 
 def print(students)
-    students.each do |student|
-    puts "Name: #{student[:name]} from #{student[:country]}, in #{student[:cohort]} cohort".center(50)
+    student_month = students.group_by {|x| x[:cohort]}
+    student_month.map do |y|
+        puts "#{y}"
     end
 end
 
@@ -37,7 +38,7 @@ def input_students
     students
 end
 
-# nothing happens until we call the methods
+
 students = input_students
 print_header
 print(students)
