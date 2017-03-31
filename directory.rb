@@ -13,7 +13,13 @@ end
 
 def print_footer(names)
     puts "--------------".center(50)
+    if names.count == 0
+        puts "We don't have any students"
+    elsif names.count == 1
+        puts "We have #{names.count} great student"
+    else
     puts "Overall, we have #{names.count} great students".center(50)
+    end
 end
 
 def input_students
