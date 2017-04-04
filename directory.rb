@@ -9,12 +9,13 @@ def print_student_list()
     if @students.empty?
         puts "There are no students"
     else
-    #use group_by to get key: value groups, with[:modifier]
+   #use group_by to get key: value groups, with[:modifier]
     student_month = @students.group_by {|stu| stu[:cohort]}
-    student_month.map do |y|
-        # prints all cohort together but still in array and hash
-        #find out how to get it out
-        puts "#{y}"
+    student_month.map do |k, v|
+        puts "#{k}"
+        for index in 0..v.size-1 do
+        puts "#{index+1}. #{v[index][:name]}, #{v[index][:country]}"
+        end
     end
     end
 end
@@ -54,6 +55,7 @@ end
 def print_menu
       puts "1. Input the students."
       puts "2. Show the students."
+      puts "3. Save the list to students.csv"
       puts "9. Exit"
 end
 
@@ -69,6 +71,8 @@ def process(selection)
       input_students
     when "2"
       show_students
+    when "3"
+      save_students
     when "9"
       exit
     else
@@ -81,5 +85,17 @@ def interactive_menu
     print_menu
     process(gets.chomp)
   end
+end
+
+def save_students
+  # open the file for writing
+  file = File.open("students.csv", "w")
+  # iterate over the array of studnets
+  @students.each do |student|
+      student_data = [student[:name], student[:cohort], student[:country]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+   end
+   file.close
 end
 interactive_menu
