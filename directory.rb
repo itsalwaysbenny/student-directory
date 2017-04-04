@@ -1,15 +1,16 @@
+@students = []
 
 def print_header
     puts "The students of Villains Academy".center(50)
     puts "--------------".center(50)
 end
 
-def print(students)
-    if students.empty?
+def print_student_list()
+    if @students.empty?
         puts "There are no students"
     else
     #use group_by to get key: value groups, with[:modifier]
-    student_month = students.group_by {|stu| stu[:cohort]}
+    student_month = @students.group_by {|stu| stu[:cohort]}
     student_month.map do |y|
         # prints all cohort together but still in array and hash
         #find out how to get it out
@@ -32,7 +33,6 @@ end
 def input_students
     puts "Please enter the name of the students".center(50)
     puts "To finish, just hit return twice".center(50)
-    students = []
     #can use .chop instead of chomp will remove the last character from string
     name = gets.chop
     until name.empty?
@@ -45,34 +45,41 @@ def input_students
       else
       end
       # must push to hash after all information is gathered
-      students << {name: name, cohort: course, country: place}
+      @students << {name: name, cohort: course, country: place}
       puts "Enter another student?".center(50)
       name = gets.chomp
     end
-    students
+    @students
 end
-
-def interactive_menu
-    students = []
-    loop do
+def print_menu
       puts "1. Input the students."
       puts "2. Show the students."
       puts "9. Exit"
-    selection = gets.chomp
+end
 
-    case selection
-    when "1"
-      students = input_students
-    when "2"
+def show_students()
       print_header
-      print(students)
-      print_footer(students)
+      print_student_list()
+      print_footer(@students)
+end
+
+def process(selection)
+  case selection
+    when "1"
+      input_students
+    when "2"
+      show_students
     when "9"
-      exit # terminates the program
+      exit
     else
       puts "I don't know what you meant, try again"
-    end
   end
 end
 
+def interactive_menu
+  loop do
+    print_menu
+    process(gets.chomp)
+  end
+end
 interactive_menu
