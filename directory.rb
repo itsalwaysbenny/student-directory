@@ -35,12 +35,12 @@ def input_students
     puts "Please enter the name of the students".center(50)
     puts "To finish, just hit return twice".center(50)
     #can use .chop instead of chomp will remove the last character from string
-    name = gets.chop
+    name = STDIN.gets.chop
     until name.empty?
       puts "Which country is this person from?".center(50)
-      place = gets.chomp
+      place = STDIN.gets.chomp
       puts "Which cohort are they on?".center(50)
-      course = gets.chomp
+      course = STDIN.gets.chomp
       if course.empty?
          course = "None"
       else
@@ -48,7 +48,7 @@ def input_students
       # must push to hash after all information is gathered
       @students << {name: name, cohort: course, country: place}
       puts "Enter another student?".center(50)
-      name = gets.chomp
+      name = STDIN.gets.chomp
     end
     @students
 end
@@ -86,7 +86,7 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -102,7 +102,7 @@ def save_students
   file.close
 end
 
-def load__students
+def load_students(filename = "students.csv")
   file = File.open("students.csv", "r")
   file.readlines.each do |line|
   name, country, cohort = line.chomp.split(',')
@@ -111,4 +111,17 @@ def load__students
   file.close
 end
 
+def try_load_students(filename = "students.csv")
+  filename = ARGV.first# first argument from the command line
+  return if filename.nil? # get out of the method if it isn't given
+  if File.exists?(filename) # if it exists
+    load_students(filename)
+     puts "Loaded #{@students.count} from #{filename}"
+  else # if it doesn't exist
+    puts "Sorry, #{filename} doesn't exist."
+    exit # quit the program
+  end
+end
+
+try_load_students
 interactive_menu
